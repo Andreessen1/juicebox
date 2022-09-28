@@ -88,6 +88,7 @@ async function getUserById(userId) {
  * POST Methods
  */
 
+
  async function createPost({
   authorId,
   title,
@@ -159,6 +160,20 @@ return posts;
     throw err
   }
 }
+
+const getAllTags = async () =>{
+  try{
+    const{rows} = await client.query(
+      `
+      SELECT * FROM tags;
+      `
+    );
+    return rows;
+  } catch (err){
+    throw err
+  }
+}
+
 
 async function getPostsByUser(userId) {
   try {
@@ -291,5 +306,6 @@ module.exports = {
   createTags,
   createPostTag,
   getPostById,
-  getPostsByTagName
+  getPostsByTagName,
+  getAllTags
 }
