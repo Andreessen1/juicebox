@@ -1,9 +1,9 @@
 const express = require('express');
-const postRouter = express.Router();
+const postsRouter = express.Router();
 const { requireUser } = require('./utils');
 const { createPost, getAllPosts, getPostById, updatePost} = require('../db');
 
-postRouter.post('/', requireUser, async (req, res, next) => {
+postsRouter.post('/', requireUser, async (req, res, next) => {
   const { title, content, tags = "" } = req.body;
 
   const tagArr = tags.trim().split(/\s+/)
@@ -28,7 +28,7 @@ postRouter.post('/', requireUser, async (req, res, next) => {
 
   
 
-postRouter.get('/', async (req, res, next) => {
+postsRouter.get('/', async (req, res, next) => {
   try {
     const allPosts = await getAllPosts();
     const posts = allPosts.filter(post => {
@@ -43,7 +43,7 @@ postRouter.get('/', async (req, res, next) => {
   }
 });
 
-    postRouter.patch('/:postId', requireUser, async (req, res, next) => {
+    postsRouter.patch('/:postId', requireUser, async (req, res, next) => {
       const { postId } = req.params;
       const { title, content, tags } = req.body;
     
@@ -78,7 +78,7 @@ postRouter.get('/', async (req, res, next) => {
       }
     });
 
-    postRouter.delete('/:postId', requireUser, async (req, res, next) => {
+    postsRouter.delete('/:postId', requireUser, async (req, res, next) => {
       try {
         const post = await getPostById(req.params.postId);
     
@@ -103,4 +103,4 @@ postRouter.get('/', async (req, res, next) => {
     });
 
 
-module.exports = postRouter;
+module.exports = postsRouter;
